@@ -1,30 +1,47 @@
 # ecommerce-data-analyst
 analyst data e-commerce
 
-# struktur direktori
-/ecommerce-data-analyst
-- ├── app.py
-- ├── requirements.txt
-- └── E-commerce-public-dataset
+# Description
+The application is an e-commerce data analysis tool constructed using Streamlit. It permits users to examine data and execute customer clustering analysis, in addition to visualising assorted metrics and product ratings derived from an e-commerce dataset.
 
-# Setup Terminal
-- pip install -r requirements.txt
-- pip install streamlit pandas numpy matplotlib seaborn
+# Key Features
+- Display Data: Select a dataset to view sample data.
+- Exploratory Data Analysis (EDA): Perform basic statistical descriptions of the selected dataset.
+- RFM Analysis and Clustering: The RFM metrics may be employed for the purpose of clustering customers via the K-Means clustering algorithm.
+- Visualizations:
+  - The mean recency, frequency, and monetary values for each customer cluster are presented.
+  - The mean product rating by category is presented herewith.
+  - The total sales figures for each product category are presented herewith.
+  - The distribution of product ratings.
 
-# Make requirements.txt
-- streamlit==1.23.1
-- pandas==2.0.3
-- numpy==1.25.0
-- seaborn==0.13.0
-- matplotlib==3.8.1
+# Installation
+- Clone Repository
+  Using git clone https://github.com/nrnfadya/ecommerce-data-analyst
+- Install Dependencies
+  Using pip for install the required libraries
 
-# Streamlit run app
-streamlit run app.py
+# Dependencies
+In order to run the application, the following libraries are required:
+- streamlit
+- pandas
+- seaborn
+- matplotlib
+- scikit-learn
+- os
 
-# Setup command prompt for clone repository
-using git clone https://github.com/nrnfadya/ecommerce-data-analyst.git
-cd ecommerce-data-analyst
+# Running the Application
+- running application with streamlit in the terminal app.py
+  streamlit run app.py
 
+# Code Explanation
+- The load_data() function is initiated. The program loads data from comma-separated value files located in the data/ folder.
+- To display a sample of the data, enter the name of the dataset in the command line. This function displays a sample of the data from the selected dataset.
+- Electrodermal Activity (EDA) Analysis: Displays statistical descriptions for the selected dataset.
+- RFM Analysis and Clustering:
+  - The recency metric is calculated by merging order data with payment data.
+  - The K-Means algorithm is employed for the purpose of clustering customers based on RFM metrics.
+  - The software displays visual representations of the mean recency, frequency, and monetary values for each customer cluster.
+- The product rating visualization presents a graphical representation of the ratings assigned to products. It displays the mean ratings and total sales figures for each product category, together with the distribution of product ratings.
 
 
 
