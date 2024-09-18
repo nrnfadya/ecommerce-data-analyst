@@ -32,6 +32,7 @@ In order to run the application, the following libraries are required:
 # Running the Application
 - running application with streamlit in the terminal app.py
   streamlit run app.py
+- using link from cloning with streamlit https://ecommerce-data-analyst-cspmehjurjzwugh9xq5duf.streamlit.app/
 
 # Code Explanation
 - The load_data() function is initiated. The program loads data from comma-separated value files located in the data/ folder.
