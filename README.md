@@ -2,23 +2,35 @@
 analyst data e-commerce
 
 # Description
-The application is an e-commerce data analysis tool constructed using Streamlit. It permits users to examine data and execute customer clustering analysis, in addition to visualising assorted metrics and product ratings derived from an e-commerce dataset.
+This project is a Streamlit-based web application for e-commerce data analysis. The application provides tools for performing exploratory data analysis (EDA) on various datasets related to customers, orders, payments, reviews and products in the e-commerce domain. It also provides visualizations and statistical insights based on the data.
 
 # Key Features
-- Display Data: Select a dataset to view sample data.
-- Exploratory Data Analysis (EDA): Perform basic statistical descriptions of the selected dataset.
-- RFM Analysis and Clustering: The RFM metrics may be employed for the purpose of clustering customers via the K-Means clustering algorithm.
-- Visualizations:
-  - The mean recency, frequency, and monetary values for each customer cluster are presented.
-  - The mean product rating by category is presented herewith.
-  - The total sales figures for each product category are presented herewith.
-  - The distribution of product ratings.
-
+- The application loads a variety of datasets, including customer information, geolocation data, order items, order payments, product categories, and other relevant data.
+- Display sample data: Users are able to select a dataset and view the top rows of data in order to gain an understanding of its structure.
+- Exploratory Data Analysis (EDA): The application offers users the ability to access general statistics, histograms, and correlation analysis for selected datasets.
+- RFM (Recency, Frequency, Monetary) Analysis: The RFM analysis tool allows users to gain insight into customer behaviour and relationships between different metrics.
+- The distribution of payment values is as follows: A histogram showing the distribution of payment amounts.
+  - Correlation Heatmap: A heatmap illustrating the correlations between recency, frequency, and monetary values.
+  - Product Rating by Category: A bar chart showing the average product ratings grouped by category.
+  - Sales by Product Category: A bar chart showing the total number of sales by product category.
+  - Product Rating Distribution: A count plot visualising the distribution of product ratings.
+- Conclusions: Summarises key insights from the analysis, including customer behaviour and product performance.
+  
 # Installation
 - Clone Repository
   Using git clone https://github.com/nrnfadya/ecommerce-data-analyst
 - Install Dependencies
   Using pip for install the required libraries
+- Prepare the Datasets
+  - customers_dataset.csv
+  - geolocation_dataset.csv
+  - order_items_dataset.csv
+  - order_payments_dataset.csv
+  - order_reviews_dataset.csv
+  - orders_dataset.csv
+  - product_category_name_translation.csv
+  - products_dataset.cs
+  - sellers_dataset.csv
 
 # Dependencies
 In order to run the application, the following libraries are required:
@@ -26,7 +38,6 @@ In order to run the application, the following libraries are required:
 - pandas
 - seaborn
 - matplotlib
-- scikit-learn
 - os
 
 # Running the Application
@@ -34,15 +45,36 @@ In order to run the application, the following libraries are required:
   streamlit run app.py
 - using link from cloning with streamlit https://ecommerce-data-analyst-cspmehjurjzwugh9xq5duf.streamlit.app/
 
-# Code Explanation
-- The load_data() function is initiated. The program loads data from comma-separated value files located in the data/ folder.
-- To display a sample of the data, enter the name of the dataset in the command line. This function displays a sample of the data from the selected dataset.
-- Electrodermal Activity (EDA) Analysis: Displays statistical descriptions for the selected dataset.
-- RFM Analysis and Clustering:
-  - The recency metric is calculated by merging order data with payment data.
-  - The K-Means algorithm is employed for the purpose of clustering customers based on RFM metrics.
-  - The software displays visual representations of the mean recency, frequency, and monetary values for each customer cluster.
-- The product rating visualization presents a graphical representation of the ratings assigned to products. It displays the mean ratings and total sales figures for each product category, together with the distribution of product ratings.
+# Applocation Structure
+- Title: The main page title is displayed as E-Commerce Data Analyst.
+- Loading Data The datasets include information about customers, order items, payments, product categories, and more.
+- Display Sample Data
+There is a dropdown selection that allows you to choose a dataset and view its first few rows. The datasets available for viewing include Customers, Geolocation, Orders, Products, and more.
+- Exploratory Data Analysis (EDA)
+Specific datasets (Customers, Order Items, Order Payments, Order Reviews) can be selected to display statistical summaries using the describe() method.
+- Distribution of Payment Values
+This histogram shows the distribution of payment values across orders, with a Kernel Density Estimation (KDE) curve for visualising the frequency distribution. This tool enables the analysis of customer behaviour based on their purchase patterns.
+-  Product Rating by Category
+This displays the average rating per product category in a bar chart format. This enables the identification of product categories with the highest levels of customer satisfaction.
+- Sales by Product Category
+A bar chart visualising the total sales per product category. This provides an overall indication of customer satisfaction with their purchases.
 
+# Folder Structure
+ecommerce-data-analyst/
+│
+├── data/                           # Folder containing all the datasets
+│   ├── customers_dataset.csv
+│   ├── geolocation_dataset.csv
+│   ├── order_items_dataset.csv
+│   ├── order_payments_dataset.csv
+│   ├── order_reviews_dataset.csv
+│   ├── orders_dataset.csv
+│   ├── product_category_name_translation.csv
+│   ├── products_dataset.csv
+│   ├── sellers_dataset.csv
+│
+├── app.py                          # Main application code
+├── requirements.txt                # Required libraries
+├── README.md                       # Project documentation
 
 
