@@ -11,17 +11,17 @@ st.title('E-Commerce Data Analyst')
 @st.cache_data
 def load_data():
     base_path = './data/'  # Path relatif ke folder "data"
-    customers = pd.read_csv(os.path.join(base_path, 'customers_dataset.csv'))
-    geolocation = pd.read_csv(os.path.join(base_path, 'geolocation_dataset.csv'))
-    order_items = pd.read_csv(os.path.join(base_path, 'order_items_dataset.csv'))
-    order_payments = pd.read_csv(os.path.join(base_path, 'order_payments_dataset.csv'))
-    order_reviews = pd.read_csv(os.path.join(base_path, 'order_reviews_dataset.csv'))
-    orders = pd.read_csv(os.path.join(base_path, 'orders_dataset.csv'))
-    product_category_name_translation = pd.read_csv(os.path.join(base_path, 'product_category_name_translation.csv'))
-    products = pd.read_csv(os.path.join(base_path, 'products_dataset.csv'))
-    sellers = pd.read_csv(os.path.join(base_path, 'sellers_dataset.csv'))
+    customers = pd.read_csv('customers_dataset.csv')
+    geolocation = pd.read_csv('geolocation_dataset.csv')
+    order_items = pd.read_csv('order_items_dataset.csv')
+    order_payments = pd.read_csv('order_payments_dataset.csv')
+    order_reviews = pd.read_csv('order_reviews_dataset.csv')
+    orders = pd.read_csv('orders_dataset.csv')
+    product_category_name_translation = pd.read_csv('product_category_name_translation.csv')
+    products = pd.read_csv('products_dataset.csv')
+    sellers = pd.read_csv('sellers_dataset.csv')
     return customers, geolocation, order_items, order_payments, order_reviews, orders, product_category_name_translation, products, sellers
-
+    
 # Load data
 customers, geolocation, order_items, order_payments, order_reviews, orders, product_category_name_translation, products, sellers = load_data()
 
