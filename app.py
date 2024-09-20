@@ -3,8 +3,6 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
-from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
 
 # Title of application
 st.title('E-Commerce Data Analyst')
@@ -13,15 +11,15 @@ st.title('E-Commerce Data Analyst')
 @st.cache_data
 def load_data():
     base_path = './data/'  # Path relatif ke folder "data"
-    customers = pd.read_csv('customers_dataset.csv')
-    geolocation = pd.read_csv('geolocation_dataset.csv')
-    order_items = pd.read_csv('order_items_dataset.csv')
-    order_payments = pd.read_csv('order_payments_dataset.csv')
-    order_reviews = pd.read_csv('order_reviews_dataset.csv')
-    orders = pd.read_csv('orders_dataset.csv')
-    product_category_name_translation = pd.read_csv('product_category_name_translation.csv')
-    products = pd.read_csv('products_dataset.csv')
-    sellers = pd.read_csv('sellers_dataset.csv')
+    customers = pd.read_csv(os.path.join(base_path, 'customers_dataset.csv'))
+    geolocation = pd.read_csv(os.path.join(base_path, 'geolocation_dataset.csv'))
+    order_items = pd.read_csv(os.path.join(base_path, 'order_items_dataset.csv'))
+    order_payments = pd.read_csv(os.path.join(base_path, 'order_payments_dataset.csv'))
+    order_reviews = pd.read_csv(os.path.join(base_path, 'order_reviews_dataset.csv'))
+    orders = pd.read_csv(os.path.join(base_path, 'orders_dataset.csv'))
+    product_category_name_translation = pd.read_csv(os.path.join(base_path, 'product_category_name_translation.csv'))
+    products = pd.read_csv(os.path.join(base_path, 'products_dataset.csv'))
+    sellers = pd.read_csv(os.path.join(base_path, 'sellers_dataset.csv'))
     return customers, geolocation, order_items, order_payments, order_reviews, orders, product_category_name_translation, products, sellers
 
 # Load data
@@ -72,7 +70,21 @@ elif dataset_name_eda == 'Order Payments':
 elif dataset_name_eda == 'Order Reviews':
     st.write(order_reviews.describe())
 
-# Convert 'order_purchase_timestamp' to datetime format
+# Univariate Analysis: Distribution of Payment Values
+st.subheader('Distribution of Payment Values')
+
+# Plot distribution using seaborn
+fig, ax = plt.subplots(figsize=(10, 6))
+sns.histplot(order_payments['payment_value'], bins=30, kde=True, ax=ax)
+plt.title('Distribution of Payment Values')
+plt.xlabel('Payment Value')
+plt.ylabel('Frequency')
+st.pyplot(fig)
+
+# Multivariate Analysis: Correlation Heatmap
+st.subheader('Correlation Heatmap')
+
+# Prepare orders and order_payments for correlation analysis
 orders['order_purchase_timestamp'] = pd.to_datetime(orders['order_purchase_timestamp'])
 
 # Merge orders with order_payments to include 'payment_value'
@@ -89,46 +101,17 @@ rfm_df = merged_data.groupby('customer_id').agg({
     'payment_value': 'sum'
 }).rename(columns={'order_id': 'Frequency', 'payment_value': 'Monetary'})
 
-# Normalize and apply KMeans clustering
-scaler = StandardScaler()
-rfm_scaled = scaler.fit_transform(rfm_df)
-kmeans = KMeans(n_clusters=4, random_state=0).fit(rfm_scaled)
-rfm_df['Cluster'] = kmeans.labels_
+# Correlation analysis
+numeric_columns = rfm_df[['Recency', 'Frequency', 'Monetary']]
+correlation_matrix = numeric_columns.corr()
 
-# Visualization: Average Recency by Cluster
-st.subheader('Average Recency by Cluster')
-fig, ax = plt.subplots(figsize=(12, 6))
-average_recency = rfm_df.groupby('Cluster')['Recency'].mean()
-average_recency.plot(kind='bar', color='skyblue', ax=ax)
-plt.title('Average Recency by Customer Cluster')
-plt.xlabel('Cluster')
-plt.ylabel('Average Recency (Days)')
-plt.xticks(rotation=0)
+# Plot the heatmap
+fig, ax = plt.subplots(figsize=(10, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', ax=ax)
+plt.title('Correlation Heatmap')
 st.pyplot(fig)
 
-# Visualization: Average Frequency by Cluster
-st.subheader('Average Frequency by Cluster')
-fig, ax = plt.subplots(figsize=(12, 6))
-average_frequency = rfm_df.groupby('Cluster')['Frequency'].mean()
-average_frequency.plot(kind='bar', color='lightgreen', ax=ax)
-plt.title('Average Frequency by Customer Cluster')
-plt.xlabel('Cluster')
-plt.ylabel('Average Frequency')
-plt.xticks(rotation=0)
-st.pyplot(fig)
-
-# Visualization: Average Monetary Value by Cluster
-st.subheader('Average Monetary Value by Cluster')
-fig, ax = plt.subplots(figsize=(12, 6))
-average_monetary = rfm_df.groupby('Cluster')['Monetary'].mean()
-average_monetary.plot(kind='bar', color='salmon', ax=ax)
-plt.title('Average Monetary Value by Customer Cluster')
-plt.xlabel('Cluster')
-plt.ylabel('Average Monetary Value')
-plt.xticks(rotation=0)
-st.pyplot(fig)
-
-# Product Rating by Category Analysis
+# Product Rating by Category
 st.subheader('Product Rating by Category')
 
 # Merge order_items, products, and order_reviews
@@ -157,9 +140,9 @@ sales_per_category = merged_data.groupby('product_category_name').size()
 # Visualization
 fig, ax = plt.subplots(figsize=(10, 6))
 sales_per_category.plot(kind='bar', ax=ax)
-plt.title('Total Penjualan per Kategori Produk')
-plt.xlabel('Kategori Produk')
-plt.ylabel('Jumlah Penjualan')
+plt.title('Total Sales per Product Category')
+plt.xlabel('Product Category')
+plt.ylabel('Total Sales')
 plt.xticks(rotation=90)
 st.pyplot(fig)
 
@@ -171,10 +154,11 @@ fig, ax = plt.subplots(figsize=(8, 5))
 sns.countplot(x='review_score', data=order_reviews, ax=ax)
 plt.title('Product Rating Distribution')
 plt.xlabel('Rating')
-plt.ylabel('Total of reviews')
+plt.ylabel('Total Reviews')
 st.pyplot(fig)
 
 # Conclusion
 st.header('Conclusion')
-st.write('1. Based on the RFM analysis, customers can be segmented into different clusters based on their purchasing behavior. The scatter plot shows clusters of customers with similar buying patterns, which can be used for targeted marketing strategies.')
-st.write('2. The analysis of product ratings by category reveals that some product categories have higher average ratings than others. This suggests that certain categories may be more satisfactory to customers compared to others.')
+st.write('1. Univariate analysis reveals the distribution of payment values, showing how most customers fall into a certain price range.')
+st.write('2. The correlation heatmap shows a strong relationship between frequency of orders and monetary value, indicating that frequent buyers tend to spend more.')
+st.write('3. Product rating analysis reveals that some categories consistently perform better in customer satisfaction, which can inform future business decisions.')
